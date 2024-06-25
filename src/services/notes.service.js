@@ -24,9 +24,7 @@ export const createNote = async (notesData) => {
     }
 }
 export const readAllNote = async () => {
-
     try {
-
         const data = await Notes.findAll()
         return {
             code: HttpStatus.OK,
@@ -67,5 +65,23 @@ export const deleteNote = async (id) => {
         code: HttpStatus.OK,
         data: data,
         message: "Note deleted 😵"
+    }
+}
+export const updateNote = async (notesData, id) => {
+    try {
+        // console.log("-->", id);
+        const data = await Notes.update(notesData, { where: { id: id } });
+        return {
+            code: HttpStatus.OK,
+            data: data,
+            message: "Note updated"
+        }
+    } catch (error) {
+        console.log("-->", error);
+        return {
+            code: HttpStatus.BAD_GATEWAY,
+            data: [],
+            message: "unsuccessful"
+        }
     }
 }
