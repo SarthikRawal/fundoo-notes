@@ -27,7 +27,7 @@ export const deleteNote = async (req, res) => {
 
 }
 export const updateNote = async (req, res) => {
-    const data = await notesService.updateNote(req.params.id);
+    const data = await notesService.updateNote(req.body, req.params.id);
 
     res.status(data.code).json(data);
 }
