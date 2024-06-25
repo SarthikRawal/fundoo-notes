@@ -26,3 +26,8 @@ export const deleteNote = async (req, res) => {
     res.status(data.code).json(data);
 
 }
+export const updateNote = async (req, res) => {
+    const data = await notesService.updateNote(req.params.id);
+
+    res.status(data.code).json(data);
+}
