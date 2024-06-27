@@ -12,16 +12,9 @@ export const signUp = async (req, res) => {
 }
 
 export const signIn = async (req, res) => {
-  try {
-    const data = await UserService.signIn(req.body);
-    console.log("controller", data);
-    res.status(data.code).json(data);
-
-  } catch (error) {
-    console.log(error);
-    // throw error;
-  }
-
+  const data = await UserService.signIn(req.body);
+  console.log("controller", data);
+  res.status(data.code).json(data);
 }
 
 export const signOut = async (req, res) => {

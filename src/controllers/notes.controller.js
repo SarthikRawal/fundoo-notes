@@ -3,19 +3,20 @@
 import * as notesService from '../services/notes.service';
 
 export const createNotes = async (req, res) => {
+    // console.log("-->", req);
     const data = await notesService.createNote(req.body);
 
     res.status(data.code).json(data);
 
 }
-export const readAllNotes = async (req, res) => {
-    const data = await notesService.readAllNote();
+export const getAllNotes = async (req, res) => {
+    const data = await notesService.getAllNote(req.body.userId);
 
     res.status(data.code).json(data);
 
 }
-export const readById = async (req, res) => {
-    const data = await notesService.readById(req.params.id);
+export const getById = async (req, res) => {
+    const data = await notesService.getById(req.params.id);
 
     res.status(data.code).json(data);
 
@@ -29,5 +30,14 @@ export const deleteNote = async (req, res) => {
 export const updateNote = async (req, res) => {
     const data = await notesService.updateNote(req.body, req.params.id);
 
+    res.status(data.code).json(data);
+}
+export const isArchive = async (req, res) => {
+    const data = await notesService.isArchive(req.params.id);
+    console.log(">debug", data);
+    res.status(data.code).json(data);
+}
+export const isTrash = async (req, res) => {
+    const data = await notesService.isTrash(req.params.id);
     res.status(data.code).json(data);
 }

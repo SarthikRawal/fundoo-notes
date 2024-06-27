@@ -19,18 +19,30 @@ export const createNote = async (notesData) => {
         return {
             code: HttpStatus.BAD_GATEWAY,
             data: [],
-            message: "notes creation unsuccessful"
+            message: "Notes creation unsuccessful"
         }
     }
 }
-export const readAllNote = async () => {
+export const getAllNote = async (userId) => {
     try {
-        const data = await Notes.findAll()
-        return {
-            code: HttpStatus.OK,
-            data: data,
-            message: "data fetched 👍"
-        };
+        console.log("-->", userId);
+        const data = await Notes.findAll({ where: { userId: userId } })
+        console.log("-->", data.userId);
+        if (data) {
+            // Note found
+            return {
+                code: HttpStatus.OK,
+                data,
+                message: "Note fetched successfully "
+            };
+        } else {
+            // Note not found
+            return {
+                code: HttpStatus.NOT_FOUND,
+                data: null,
+                message: "Note not found for this user"
+            };
+        }
 
     } catch (error) {
         console.log(error);
@@ -41,7 +53,7 @@ export const readAllNote = async () => {
         }
     }
 }
-export const readById = async (id) => {
+export const getById = async (id) => {
     try {
         const data = await Notes.findByPk(id);
         return {
@@ -63,7 +75,6 @@ export const deleteNote = async (id) => {
     await Notes.destroy({ where: { id: id } });
     return {
         code: HttpStatus.OK,
-        data: data,
         message: "Note deleted 😵"
     }
 }
@@ -82,6 +93,77 @@ export const updateNote = async (notesData, id) => {
             code: HttpStatus.BAD_GATEWAY,
             data: [],
             message: "unsuccessful"
+        }
+    }
+}
+export const isArchive = async (id) => {
+    try {
+        // console.log(">service-debug", id);
+        const data = await Notes.findOne({ where: { id: id } });
+        // console.log(">service-debug", data.isArchive);
+        if (!data.isArchive) {
+            data.isArchive = !data.isArchive;
+            await data.save();
+            // console.log(">service-debug", data.isArchive);
+            return {
+                code: HttpStatus.OK,
+                data: [],
+                message: "Note is Archived 🫡"
+            }
+        } else if (data.isArchive) {
+            data.isArchive = !data.isArchive;
+            await data.save();
+            return {
+                code: HttpStatus.OK,
+                data: [],
+                message: "Note is Trashed 🫡"
+            }
+        } else {
+            return {
+                code: HttpStatus.BAD_GATEWAY,
+                data: [],
+                message: "Something went wrong..😵"
+            }
+        }
+    } catch (error) {
+        return {
+            code: HttpStatus.BAD_GATEWAY,
+            data: [],
+            message: "Archive unsuccessful..!"
+        }
+    }
+}
+export const isTrash = async (id) => {
+    try {
+        const data = await Notes.findOne({ where: { id: id } });
+        if (!data.isTrash) {
+            data.isTrash = !data.isTrash;
+            await data.save();
+            return {
+                code: HttpStatus.OK,
+                data: [],
+                message: "Note is Trashed 🫡"
+            }
+        } else if (data.isTrash) {
+            data.isTrash = !data.isTrash;
+            await data.save();
+            return {
+                code: HttpStatus.OK,
+                data: [],
+                message: "Note is Trashed 🫡"
+            }
+        } else {
+            return {
+                code: HttpStatus.BAD_GATEWAY,
+                data: [],
+                message: "Something went wrong..😵"
+            }
+        }
+    } catch (error) {
+        return {
+            code: HttpStatus.BAD_GATEWAY,
+            data: [],
+            message: "Archive unsuccessful..!"
         }
     }
 }

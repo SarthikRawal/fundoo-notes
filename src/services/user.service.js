@@ -59,7 +59,7 @@ export const signIn = async (userDetails) => {
       return {
         code: HttpStatus.UNAUTHORIZED,
         data: [],
-        message: "Invalid email or password"
+        message: "Invalid email"
       };
     }
 
@@ -69,7 +69,7 @@ export const signIn = async (userDetails) => {
       return {
         code: HttpStatus.UNAUTHORIZED,
         data: [],
-        message: "Invalid email or password"
+        message: "Invalid password"
       };
     }
 

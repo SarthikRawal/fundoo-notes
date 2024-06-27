@@ -15,8 +15,20 @@ module.exports = (sequelize, DataTypes) => {
     }
     notes.init(
         {
+            userId: DataTypes.INTEGER,
             title: DataTypes.STRING,
-            content: DataTypes.STRING
+            content: DataTypes.STRING,
+            isArchive: {
+                type: DataTypes.BOOLEAN,
+                allowNull: false,
+                defaultValue: false,
+            },
+            isTrash: {
+                type: DataTypes.BOOLEAN,
+                allowNull: false,
+                defaultValue: false,
+            },
+            color: DataTypes.STRING
         },
         {
             sequelize,
