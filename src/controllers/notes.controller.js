@@ -41,3 +41,7 @@ export const isTrash = async (req, res) => {
     const data = await notesService.isTrash(req.params.id);
     res.status(data.code).json(data);
 }
+export const setColor = async (req, res) => {
+    const data = await notesService.setColor(req.body, req.params.id);
+    res.status(data.code).json(data);
+}

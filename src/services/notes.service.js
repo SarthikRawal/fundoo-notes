@@ -116,7 +116,7 @@ export const isArchive = async (id) => {
             return {
                 code: HttpStatus.OK,
                 data: [],
-                message: "Note is Trashed 🫡"
+                message: "Note is Archived 🫡"
             }
         } else {
             return {
@@ -165,5 +165,16 @@ export const isTrash = async (id) => {
             data: [],
             message: "Archive unsuccessful..!"
         }
+    }
+}
+export const setColor = async (notesData, id) => {
+    console.log(">debug service", notesData);
+    const data = await Notes.update(notesData, { where: { id: id } });
+    console.log(">debug service", data);
+
+    return {
+        code: HttpStatus.OK,
+        data: [],
+        message: `color is changed to ${notesData.color}`
     }
 }

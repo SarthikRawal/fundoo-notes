@@ -25,4 +25,7 @@ router.put('/isArchive/:id', userAuth, notesController.isArchive);
 // isTrash 
 router.put('/isTrash/:id', userAuth, notesController.isTrash);
 
+// set note color 
+router.put('/setColor/:id', userAuth, notesController.setColor);
+
 export default router;
