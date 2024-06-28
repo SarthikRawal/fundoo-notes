@@ -28,4 +28,7 @@ router.put('/isTrash/:id', userAuth, notesController.isTrash);
 // set note color 
 router.put('/setColor/:id', userAuth, notesController.setColor);
 
+// add collaboration on a note 
+router.put('/addCollab/:id', userAuth, notesController.addCollab);
+
 export default router;
