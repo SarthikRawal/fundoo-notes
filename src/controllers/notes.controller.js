@@ -1,6 +1,9 @@
 // import HttpStatus from 'http-status-codes';
 // import { response } from 'express';
 import * as notesService from '../services/notes.service';
+import sequelize, { DataTypes } from '../config/database';
+const Notes = require('../models/notes')(sequelize, DataTypes);
+
 
 export const createNotes = async (req, res) => {
     // console.log("-->", req);
@@ -34,7 +37,7 @@ export const updateNote = async (req, res) => {
 }
 export const isArchive = async (req, res) => {
     const data = await notesService.isArchive(req.params.id);
-    console.log(">debug", data);
+    // console.log(">debug", data);
     res.status(data.code).json(data);
 }
 export const isTrash = async (req, res) => {
@@ -43,5 +46,10 @@ export const isTrash = async (req, res) => {
 }
 export const setColor = async (req, res) => {
     const data = await notesService.setColor(req.body, req.params.id);
+    res.status(data.code).json(data);
+}
+export const addCollab = async (req, res) => {
+    const data = await notesService.addCollab(req.body, req.params.id);
+    // console.log("-->", data);
     res.status(data.code).json(data);
 }

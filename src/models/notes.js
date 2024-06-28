@@ -28,7 +28,11 @@ module.exports = (sequelize, DataTypes) => {
                 allowNull: false,
                 defaultValue: false,
             },
-            color: DataTypes.STRING
+            color: DataTypes.STRING,
+            collabEmail: {
+                type: DataTypes.ARRAY(DataTypes.STRING),
+                defaultValue: [],
+            }
         },
         {
             sequelize,
