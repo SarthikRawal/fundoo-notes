@@ -55,9 +55,17 @@ export const getAllNote = async (userId) => {
         }
     }
 }
-export const getById = async (id) => {
+export const getById = async (id, userId) => {
     try {
-        const data = await Notes.findByPk(id);
+        const data = await Notes.findAll({ where: { id: id, userId: userId } });
+        console.log("data--", data);
+        if (data.length === 0) {
+            return {
+                code: HttpStatus.UNAUTHORIZED,
+                data: [],
+                message: "Unauthorized user ☠️"
+            }
+        }
         return {
             code: HttpStatus.OK,
             data: data,
@@ -80,10 +88,16 @@ export const deleteNote = async (id) => {
         message: "Note deleted 😵"
     }
 }
-export const updateNote = async (notesData, id) => {
+export const updateNote = async (notesData, id, userId) => {
     try {
         // console.log("-->", id);
-        const data = await Notes.update(notesData, { where: { id: id } });
+        const data = await Notes.update(notesData, { where: { id: id, userId: userId } });
+        if (data.length === 0) {
+            return {
+                code: HttpStatus.UNAUTHORIZED,
+                message: "Unauthorized user ☠️"
+            }
+        }
         return {
             code: HttpStatus.OK,
             data: data,
@@ -169,14 +183,19 @@ export const isTrash = async (id) => {
         }
     }
 }
-export const setColor = async (notesData, id) => {
+export const setColor = async (notesData, id, userId) => {
     try {
         console.log(">debug service - input notesData:", notesData);
-        const data = await Notes.update(notesData, { where: { id: id, userId: notesData.userId } });
-        // console.log(">debug service - retrieved data:", data);
-        if (!data) {
-            throw new Error("unauthorized user");
+        const data = await Notes.findAll({ where: { id: id, userId: userId } });
+        console.log(">debug service - retrieved data:", data);
+        if (data.length === 0) {
+            return {
+                code: HttpStatus.UNAUTHORIZED,
+                data: [],
+                message: "Unauthorized user ☠️"
+            }
         }
+        await Notes.update(notesData, { where: { id: id } })
         return {
             code: HttpStatus.OK,
             data: [],

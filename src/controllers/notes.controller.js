@@ -19,7 +19,7 @@ export const getAllNotes = async (req, res) => {
 
 }
 export const getById = async (req, res) => {
-    const data = await notesService.getById(req.params.id);
+    const data = await notesService.getById(req.params.id, req.body.userId);
 
     res.status(data.code).json(data);
 
@@ -31,7 +31,7 @@ export const deleteNote = async (req, res) => {
 
 }
 export const updateNote = async (req, res) => {
-    const data = await notesService.updateNote(req.body, req.params.id);
+    const data = await notesService.updateNote(req.body, req.params.id, req.body.userId);
 
     res.status(data.code).json(data);
 }
@@ -45,7 +45,7 @@ export const isTrash = async (req, res) => {
     res.status(data.code).json(data);
 }
 export const setColor = async (req, res) => {
-    const data = await notesService.setColor(req.body, req.params.id);
+    const data = await notesService.setColor(req.body, req.params.id, req.body.userId);
     res.status(data.code).json(data);
 }
 export const addCollab = async (req, res) => {
