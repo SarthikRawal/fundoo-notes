@@ -1,0 +1,420 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "title": "Fundoo-Notes API",
+        "version": "1.0.0",
+        "description": "API documentation for my Express project"
+    },
+    "host": "localhost:3000",
+    "basePath": "/api/v1",
+    "schemes": [
+        "http"
+    ],
+    "paths": {
+        "/": {
+            "get": {
+                "summary": "Welcome endpoint",
+                "responses": {
+                    "200": {
+                        "description": "Returns a welcome message",
+                        "schema": {
+                            "type": "string",
+                            "example": "Welcome"
+                        }
+                    }
+                }
+            }
+        },
+        "/users/signup": {
+            "post": {
+                "tags": [
+                    "Users Part"
+                ],
+                "summary": "Sign up a new user",
+                "parameters": [
+                    {
+                        "in": "body",
+                        "name": "user",
+                        "description": "User details",
+                        "schema": {
+                            "$ref": "#/definitions/User"
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "User created successfully"
+                    },
+                    "400": {
+                        "description": "User already exists"
+                    },
+                    "500": {
+                        "description": "Internal server error"
+                    }
+                }
+            }
+        },
+        "/users/signin": {
+            "post": {
+                "tags": [
+                    "Users Part"
+                ],
+                "summary": "Sign in a user",
+                "parameters": [
+                    {
+                        "in": "body",
+                        "name": "credentials",
+                        "description": "User credentials",
+                        "schema": {
+                            "$ref": "#/definitions/Credentials"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "User signed in successfully"
+                    },
+                    "400": {
+                        "description": "Invalid credentials"
+                    },
+                    "500": {
+                        "description": "Internal server error"
+                    }
+                }
+            }
+        },
+        "/notes": {
+            "post": {
+                "tags": [
+                    "Notes part"
+                ],
+                "security": [
+                    {
+                        "Bearer": {
+                            "$ref": "#/securityDefinitions"
+                        }
+                    }
+                ],
+                "summary": "Create note",
+                "parameters": [
+                    {
+                        "in": "body",
+                        "name": "create-note",
+                        "description": "Create note",
+                        "schema": {
+                            "$ref": "#/definitions/Notes"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Note created successful"
+                    },
+                    "400": {
+                        "description": "Invalid credentials"
+                    },
+                    "500": {
+                        "description": "Internal server error"
+                    }
+                }
+            }
+        },
+        "/notes/getAllNote": {
+            "get": {
+                "tags": [
+                    "Notes part"
+                ],
+                "security": [
+                    {
+                        "Bearer": {
+                            "$ref": "#/securityDefinitions"
+                        }
+                    }
+                ],
+                "summary": "get all the notes",
+                "responses": {
+                    "200": {
+                        "description": "note fetched successfully"
+                    },
+                    "400": {
+                        "description": "unauthorized user"
+                    },
+                    "500": {
+                        "description": "Internal server error"
+                    }
+                }
+            }
+        },
+        "/notes/getById/{id}": {
+            "get": {
+                "tags": [
+                    "Notes part"
+                ],
+                "security": [
+                    {
+                        "Bearer": {
+                            "$ref": "#/securityDefinitions"
+                        }
+                    }
+                ],
+                "summary": "get note by ID",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "type": "string",
+                        "description": "ID of the note to retrieve"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "note created successfully"
+                    },
+                    "400": {
+                        "description": "unauthorized user"
+                    },
+                    "500": {
+                        "description": "Internal server error"
+                    }
+                }
+            }
+        },
+        "/notes/update/{id}": {
+            "put": {
+                "tags": [
+                    "Notes part"
+                ],
+                "security": [
+                    {
+                        "Bearer": {
+                            "$ref": "#/securityDefinitions"
+                        }
+                    }
+                ],
+                "summary": "Update a note",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "in": "body",
+                        "name": "update-note",
+                        "description": "Update a note",
+                        "schema": {
+                            "$ref": "#/definitions/Notes"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "note updated successfully"
+                    },
+                    "400": {
+                        "description": "unauthorized user"
+                    },
+                    "500": {
+                        "description": "Internal server error"
+                    }
+                }
+            }
+        },
+        "/notes/delete/{id}": {
+            "delete": {
+                "tags": [
+                    "Notes part"
+                ],
+                "security": [
+                    {
+                        "Bearer": {
+                            "$ref": "#/securityDefinitions"
+                        }
+                    }
+                ],
+                "summary": "Delete a note",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "note deleted successfully"
+                    },
+                    "400": {
+                        "description": "unauthorized user"
+                    },
+                    "500": {
+                        "description": "Internal server error"
+                    }
+                }
+            }
+        },
+        "/notes/isArchive/{id}": {
+            "put": {
+                "tags": [
+                    "Notes part"
+                ],
+                "security": [
+                    {
+                        "Bearer": {
+                            "$ref": "#/securityDefinitions"
+                        }
+                    }
+                ],
+                "summary": "Archive a note",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "note Archived successfully"
+                    },
+                    "400": {
+                        "description": "unauthorized user"
+                    },
+                    "500": {
+                        "description": "Internal server error"
+                    }
+                }
+            }
+        },
+        "/notes/isTrash/{id}": {
+            "put": {
+                "tags": [
+                    "Notes part"
+                ],
+                "security": [
+                    {
+                        "Bearer": {
+                            "$ref": "#/securityDefinitions"
+                        }
+                    }
+                ],
+                "summary": "Archive a note",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "note Trashed successfully"
+                    },
+                    "400": {
+                        "description": "unauthorized user"
+                    },
+                    "500": {
+                        "description": "Internal server error"
+                    }
+                }
+            }
+        },
+        "/notes/setColor/{id}": {
+            "put": {
+                "tags": [
+                    "Notes part"
+                ],
+                "security": [
+                    {
+                        "Bearer": {
+                            "$ref": "#/securityDefinitions"
+                        }
+                    }
+                ],
+                "summary": "Archive a note",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "in": "body",
+                        "name": "change-color",
+                        "description": "set color for a note",
+                        "schema": {
+                            "$ref": "#/definitions/Notes"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "note color changed"
+                    },
+                    "400": {
+                        "description": "unauthorized user"
+                    },
+                    "500": {
+                        "description": "Internal server error"
+                    }
+                }
+            }
+        },
+        "/notes/addCollab": {}
+    },
+    "definitions": {
+        "User": {
+            "type": "object",
+            "properties": {
+                "firstName": {
+                    "type": "string"
+                },
+                "lastName": {
+                    "type": "string"
+                },
+                "email": {
+                    "type": "string"
+                },
+                "password": {
+                    "type": "string"
+                }
+            }
+        },
+        "Notes": {
+            "type": "object",
+            "properties": {
+                "title": {
+                    "type": "string"
+                },
+                "content": {
+                    "type": "string"
+                }
+            }
+        },
+        "Credentials": {
+            "type": "object",
+            "properties": {
+                "email": {
+                    "type": "string"
+                },
+                "password": {
+                    "type": "string"
+                }
+            }
+        }
+    },
+    "securityDefinitions": {
+        "Bearer": {
+            "type": "apiKey",
+            "name": "Authorization",
+            "in": "header",
+            "description": "Enter your bearer token in the format **Bearer &lt;token&gt;**"
+        }
+    }
+}
