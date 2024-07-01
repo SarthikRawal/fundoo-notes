@@ -4,6 +4,7 @@ import HttpStatus from 'http-status-codes';
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 import dotenv from 'dotenv';
+import { UniqueConstraintError } from 'sequelize';
 
 dotenv.config();
 
@@ -33,12 +34,20 @@ export const signUp = async (userDetails) => {
     }
 
   } catch (error) {
-    console.log(error);
-    return {
-      code: HttpStatus.INTERNAL_SERVER_ERROR,
-      data: [],
-      message: "Something went wrong"
-    };
+    // console.log(error);
+    if (error instanceof UniqueConstraintError) {
+      return {
+        code: HttpStatus.BAD_REQUEST,
+        data: [],
+        message: "User Already Exsists"
+      };
+    } else {
+      return {
+        code: HttpStatus.INTERNAL_SERVER_ERROR,
+        data: [],
+        message: "Something went wrong"
+      };
+    }
   }
 }
 

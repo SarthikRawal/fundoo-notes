@@ -8,16 +8,16 @@ const router = express.Router();
 router.post('', userAuth, notesController.createNotes);
 
 // read notes
-router.get('', userAuth, notesController.getAllNotes);
+router.get('/getAllNote', userAuth, notesController.getAllNotes);
 
 // read notes by id
-router.get('/:id', userAuth, notesController.getById);
+router.get('/getById/:id', userAuth, notesController.getById);
 
 // read notes 
-router.delete('/:id', userAuth, notesController.deleteNote);
+router.delete('/delete/:id', userAuth, notesController.deleteNote);
 
 // update notes 
-router.put('/:id', userAuth, notesController.updateNote);
+router.put('/update/:id', userAuth, notesController.updateNote);
 
 // isArchive 
 router.put('/isArchive/:id', userAuth, notesController.isArchive);
