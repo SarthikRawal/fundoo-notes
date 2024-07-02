@@ -1,0 +1,16 @@
+>Unit Testing
+
+Unit testing involves testing individual components or pieces of code (usually functions or methods) in isolation to ensure they perform as expected. These tests typically cover the smallest testable parts of an application.
+
+>Purpose:
+
+. Validate the functionality of individual units of code.
+. Catch bugs early in the development cycle.
+. Facilitate refactoring by ensuring that the code continues to work as expected after changes.
+
+>Characteristics:
+
+Isolation: Each unit test should test a single part of the code and run independently of other tests.
+Automation: Unit tests are often automated and run frequently during development.
+Speed: They are usually fast to run since they focus on small pieces of code.
+Granularity: They test specific behaviors or properties of the code.
