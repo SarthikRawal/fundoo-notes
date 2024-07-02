@@ -366,7 +366,48 @@
                 }
             }
         },
-        "/notes/addCollab": {}
+        "/notes/addCollab": {
+            "put": {
+                "tags": [
+                    "Notes part"
+                ],
+                "security": [
+                    {
+                        "Bearer": {
+                            "$ref": "#/securityDefinitions"
+                        }
+                    }
+                ],
+                "summary": "add collaboration",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "in": "body",
+                        "name": "add-collab",
+                        "description": "add collaboration on note",
+                        "schema": {
+                            "$ref": "#/definitions/addCollab"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "new collaboration added"
+                    },
+                    "400": {
+                        "description": "unauthorized user"
+                    },
+                    "500": {
+                        "description": "Internal server error"
+                    }
+                }
+            }
+        }
     },
     "definitions": {
         "User": {
@@ -406,6 +447,12 @@
                 "password": {
                     "type": "string"
                 }
+            }
+        },
+        "addCollab": {
+            "type": "object",
+            "properties": {
+                "collabEmail": "string"
             }
         }
     },
