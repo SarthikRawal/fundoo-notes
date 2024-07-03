@@ -58,7 +58,7 @@ describe('User APIs Test', () => {
           expect(res.statusCode).to.equal(400);
           expect(res.body).to.be.an('object');
           expect(res.body.message).to.equal(
-            'User Already Exists'
+            'User with this email already exists'
           );
           done();
         });
