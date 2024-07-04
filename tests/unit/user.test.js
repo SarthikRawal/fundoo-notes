@@ -9,10 +9,12 @@ describe('User Service Function Test', () => {
     before(async () => {
         await User.destroy({ where: {} });
         await Note.destroy({ where: {} });
+
     });
     after(async () => {
         await User.destroy({ where: {} });
         await Note.destroy({ where: {} });
+
     });
 
     describe('signUp Function Tests', () => {
@@ -25,7 +27,6 @@ describe('User Service Function Test', () => {
             };
 
             const result = await UserService.signUp(body);
-            // console.log("-->", typeof result);
             expect(result).to.be.an('object');
             expect(result.data.email).to.equals(body.email);
         });
@@ -52,10 +53,7 @@ describe('User Service Function Test', () => {
             };
             const result = await UserService.signIn(body);
             expect(result).to.be.an('object');
-            console.log("-->", result);
-            console.log("-->", body);
-
-            expect(result.data.email).to.equal(body.email);
+            expect(result.user.email).to.equal(body.email);
         });
 
         it('signIn() should throw an error if email or password are incorrect', async () => {
