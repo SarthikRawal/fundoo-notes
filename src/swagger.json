@@ -349,7 +349,7 @@
                         "name": "change-color",
                         "description": "set color for a note",
                         "schema": {
-                            "$ref": "#/definitions/Notes"
+                            "$ref": "#/definitions/SetColor"
                         }
                     }
                 ],
@@ -366,7 +366,7 @@
                 }
             }
         },
-        "/notes/addCollab": {
+        "/notes/addCollab/{id}": {
             "put": {
                 "tags": [
                     "Notes part"
@@ -391,7 +391,7 @@
                         "name": "add-collab",
                         "description": "add collaboration on note",
                         "schema": {
-                            "$ref": "#/definitions/addCollab"
+                            "$ref": "#/definitions/AddCollab"
                         }
                     }
                 ],
@@ -449,10 +449,20 @@
                 }
             }
         },
-        "addCollab": {
+        "AddCollab": {
             "type": "object",
             "properties": {
-                "collabEmail": "string"
+                "collabEmail": {
+                    "type": "string"
+                }
+            }
+        },
+        "SetColor": {
+            "type": "object",
+            "properties": {
+                "color": {
+                    "type": "string"
+                }
             }
         }
     },

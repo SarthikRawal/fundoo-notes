@@ -10,14 +10,12 @@ import notesRoute from './notes.route';
  * @returns router
  */
 const routes = () => {
-
   router.get('/', (req, res) => {
     res.json('Welcome sarthik..');
   });
   router.use('/users', userRoute);
 
   router.use('/notes', notesRoute);
-
 
   return router;
 };

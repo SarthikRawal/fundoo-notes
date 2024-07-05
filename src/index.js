@@ -5,7 +5,7 @@ import express from 'express';
 import cors from 'cors';
 import helmet from 'helmet';
 
-import swaggerDocument from './swagger.json'
+import swaggerDocument from './swagger.json';
 import swaggerUi from 'swagger-ui-express';
 
 import routes from './routes';
