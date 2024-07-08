@@ -62,12 +62,20 @@ export const signIn = async (userDetails) => {
 
     const user = await User.findOne({ where: { email: userDetails.email } });
 
+    if (!user) {
+      return {
+        code: HttpStatus.UNAUTHORIZED,
+        data: [],
+        message: 'Invalid email or password'
+      };
+    }
+
     const validPassword = await bcrypt.compare(
       userDetails.password,
       user.password
     );
 
-    if (!validPassword || !user) {
+    if (!validPassword) {
       return {
         code: HttpStatus.UNAUTHORIZED,
         data: [],
@@ -88,7 +96,7 @@ export const signIn = async (userDetails) => {
     return {
       code: HttpStatus.INTERNAL_SERVER_ERROR,
       data: [],
-      message: 'Something went wrong'
+      message: error.message
     };
   }
 };
