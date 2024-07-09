@@ -2,15 +2,14 @@ import { createTransport } from 'nodemailer';
 import dotenv from 'dotenv';
 dotenv.config();
 
-async function sendEmail(email, token) {
-    const transporter = createTransport({
-        service: 'Gmail',
-        auth: {
-            user: process.env.MY_GMAIL,
-            pass: process.env.GMAIL_PASSWORD,
-        },
-    });
-
+const transporter = createTransport({
+    service: 'Gmail',
+    auth: {
+        user: process.env.MY_GMAIL,
+        pass: process.env.GMAIL_PASSWORD,
+    },
+});
+export async function sendResetPasswordEmail(email, token) {
     const mailOptions = {
         to: email,
         from: 'sarthik32@gmail.com',
@@ -21,4 +20,13 @@ async function sendEmail(email, token) {
     await transporter.sendMail(mailOptions);
 }
 
-export default sendEmail
+export async function sendNotification(data) {
+    const mailOptions = {
+        to: data.email,
+        from: 'sarthik32@gmail.com',
+        subject: 'New Registration',
+        html: `<h1>Welcome to Our Service</h1>
+            <p>Hi ${data.firstName},</p>
+            <p>Thank you for registering with us. Your account has been successfully created.</p>`
+    }
+}

@@ -5,7 +5,8 @@ import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 import dotenv from 'dotenv';
 import { UniqueConstraintError } from 'sequelize';
-import sendEmail from '../utils/sendEmail';
+import { sendResetPasswordEmail } from '../utils/sendEmail';
+import { consume, publish } from '../config/rabbitmq';
 
 dotenv.config();
 
@@ -20,6 +21,9 @@ export const signUp = async (userDetails) => {
 
       const data = await User.create(userDetails);
 
+      const message = JSON.stringify(data);
+      await publish('User', message);
+      await consume('User', message)
       return {
         code: HttpStatus.CREATED,
         data: data,
@@ -114,9 +118,9 @@ export const forgetPassword = async (email) => {
     const token = jwt.sign({ userId: user.id, email: user.email }, secretKey, { expiresIn: '10m' });
 
     const link = `UserId - ${user.id} & token - ${token}`;
-
     console.log("--> link", link);
-    await sendEmail(user.email, token);
+
+    await sendResetPasswordEmail(user.email, token);
     return {
       code: HttpStatus.OK,
       data: user,

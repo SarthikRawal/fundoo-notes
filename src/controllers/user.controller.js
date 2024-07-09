@@ -18,7 +18,6 @@ export const signIn = async (req, res) => {
 
 export const forgetPassword = async (req, res) => {
   const { email } = req.body;
-
   console.log("user-email", email);
   if (!email) {
     return res.status(HttpStatus.BAD_REQUEST).json({

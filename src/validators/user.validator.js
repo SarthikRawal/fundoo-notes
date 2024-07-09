@@ -15,3 +15,15 @@ export const newUserValidator = (req, res, next) => {
     next();
   }
 };
+export const emailValidator = (req, res, next) => {
+  const schema = Joi.object({
+    email: Joi.string().email().min(3).required(),
+  });
+  const { error, value } = schema.validate(req.body);
+  if (error) {
+    next(error);
+  } else {
+    req.validatedBody = value;
+    next();
+  }
+};

@@ -18,6 +18,7 @@ export async function publish(queue, message) {
     const { connection, channel } = await connect();
     await channel.assertQueue(queue);
     channel.sendToQueue(queue, Buffer.from(message));
+    console.log(`--> Message sent to queue ${queue}: ${message}`);
     logger.info(`Message sent to queue ${queue}: ${message}`);
     setTimeout(() => {
         connection.close();
